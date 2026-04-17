@@ -76,6 +76,7 @@
       --font-serif: 'Source Serif 4', serif;
       --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
       --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+      --orbit-radius: 200px;
     }
 
     html {
@@ -447,7 +448,9 @@
     }
 
     .hero-line2 {
-      display: block;
+      display: inline-flex;
+      align-items: end;
+      gap: 8px;
       margin-left: 190px;
       font-size: clamp(60px, 9.5vw, 145px);
       color: #fff;
@@ -461,7 +464,9 @@
     .hero-line2 img {
       height: 80px;
       width: 80px;
+      flex-shrink: 0;
       object-fit: cover;
+      margin-bottom: 4px;
     }
 
     @keyframes hfu {
@@ -745,10 +750,16 @@
 
     .logos-track {
       display: flex;
-      gap: 64px;
       align-items: center;
       animation: lscroll 28s linear infinite;
       width: max-content
+    }
+
+    .logos-set {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      padding-right: 64px
     }
 
     .logos-track:hover {
@@ -1833,7 +1844,6 @@
     }
 
     .cta-headline em {
-      font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-weight: 400;
       color: var(--blue)
@@ -1853,7 +1863,6 @@
       background: var(--blue);
       color: #fff;
       border: none;
-      font-family: 'Outfit', sans-serif;
       font-size: 16px;
       font-weight: 600;
       letter-spacing: 0.05em;
@@ -1982,11 +1991,11 @@
 
     @media(max-width:768px) {
       nav {
-        padding: 20px 24px
+        padding: 20px 16px
       }
 
       nav.scrolled {
-        padding: 14px 24px
+        padding: 14px 16px
       }
 
       #hero,
@@ -2001,8 +2010,13 @@
       #brandzup,
       #cta-bar,
       footer {
-        padding-left: 24px;
-        padding-right: 24px
+        padding-left: 16px;
+        padding-right: 16px
+      }
+
+      .svc-animated-video {
+        width: 50px;
+        height: 50px;
       }
 
       .stats-grid {
@@ -2015,7 +2029,7 @@
 
       .clients-layout {
         grid-template-columns: 1fr;
-        gap: 0
+        gap: 10px;
       }
 
       .clients-tiles {
@@ -2084,6 +2098,7 @@
         grid-template-columns: 1fr 1fr;
         gap: 36px
       }
+
     }
 
 
@@ -2619,12 +2634,373 @@
     /* Keyframe: rotate → translate → counter‑rotate */
     @keyframes orbitMarker {
       from {
-        transform: rotate(0deg) translate(200px) rotate(0deg);
+        transform: rotate(0deg) translate(var(--orbit-radius)) rotate(0deg);
       }
 
       to {
-        transform: rotate(360deg) translate(200px) rotate(-360deg);
+        transform: rotate(360deg) translate(var(--orbit-radius)) rotate(-360deg);
       }
+    }
+
+    /* ─── THINKING SECTION – RESPONSIVE ─── */
+
+    /* Tablet & below: flex-col layout, medium orbit */
+    @media(max-width:1024px) {
+      #thinking {
+        padding: 80px 40px 100px
+      }
+
+      .thinking-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 48px
+      }
+
+      .thinking-left {
+        margin-top: 0
+      }
+
+      .thinking-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center
+      }
+
+      .thinking-close {
+        text-align: center;
+        max-width: 100%;
+        margin-top: 32px
+      }
+
+      /* orbit-container just a bit larger than the orbit ring to give room for dot labels */
+      #orbit-container {
+        --orbit-radius: 150px;
+        width: 360px;
+        height: 360px
+      }
+
+      .orbit {
+        width: 300px;
+        height: 300px
+      }
+
+      .sun {
+        width: 120px;
+        height: 120px
+      }
+
+      .sun span {
+        font-size: 18px
+      }
+
+      .marker::after {
+        font-size: 17px
+      }
+    }
+
+    /* Mobile: smaller orbit, all dots still hug the circle edge */
+    @media(max-width:768px) {
+      #thinking {
+        padding: 60px 24px 80px
+      }
+
+      .thinking-layout {
+        gap: 36px
+      }
+
+      #orbit-container {
+        --orbit-radius: 100px;
+        width: 260px;
+        height: 260px
+      }
+
+      .orbit {
+        width: 200px;
+        height: 200px
+      }
+
+      .sun {
+        width: 90px;
+        height: 90px
+      }
+
+      .sun span {
+        font-size: 13px
+      }
+
+      .marker {
+        width: 10px;
+        height: 10px;
+        margin: -5px
+      }
+
+      .marker::after {
+        font-size: 13px;
+        top: 14px
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       FULL-SITE RESPONSIVE — must come last in cascade
+       ═══════════════════════════════════════════════════ */
+
+    /* ── TABLET (≤ 1024px) ─────────────────────────── */
+    @media(max-width:1024px) {
+
+      /* Reduce heavy vertical padding site-wide */
+      #stats,
+      #services,
+      #clients,
+      #testimonials,
+      #brandzup,
+      #cta-bar {
+        padding-top: 90px;
+        padding-bottom: 90px
+      }
+
+      #studio {
+        padding-top: 90px;
+        padding-bottom: 90px
+      }
+
+      #work {
+        padding-top: 90px;
+        padding-bottom: 90px
+      }
+
+      #founder {
+        padding-top: 90px;
+        padding-bottom: 90px
+      }
+
+      /* Hero — nudge the italic line in */
+      .hero-line2 {
+        margin-left: 80px
+      }
+
+      .hero-line2 img {
+        height: 60px;
+        width: 60px;
+      }
+
+      /* Work images — reduce fixed heights */
+      .wc1 .wimg {
+        height: 440px
+      }
+
+      .wc2 .wimg {
+        height: 320px
+      }
+
+      .wc3 .wimg {
+        height: 280px
+      }
+
+      /* Founder — tighten gap */
+      .founder-inner {
+        gap: 48px
+      }
+    }
+
+    /* ── TABLET narrow + below (< 1280px): 2 testimonial cols ── */
+    @media(max-width:1279px) {
+      .test-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    /* ── MOBILE (≤ 768px) ──────────────────────────── */
+    @media(max-width:768px) {
+
+      /* Custom cursor — hide on touch screens */
+      .cursor,
+      .cursor-ring {
+        display: none
+      }
+
+      /* NAV — hide text links, keep only hamburger */
+      .nav-cta a {
+        display: none
+      }
+
+      .launching-div {
+        display: none
+      }
+
+      /* HERO */
+      .hero-content {
+        margin-top: 80px;
+        padding: 0 16px
+      }
+
+      .hero-line2 {
+        margin-left: 0;
+        font-size: clamp(44px, 9.5vw, 60px)
+      }
+
+      .hero-line2 img {
+        width: 30px;
+        height: 30px
+      }
+
+      /* STATS */
+      #stats {
+        padding-top: 64px;
+        padding-bottom: 64px
+      }
+
+      .stats-heading {
+        margin-bottom: 40px
+      }
+
+      .stat-card {
+        padding: 24px 16px
+      }
+
+      /* SERVICES */
+      #services {
+        padding-top: 64px;
+        padding-bottom: 64px
+      }
+
+      .services-heading {
+        margin-bottom: 40px
+      }
+
+      .svc-card {
+        padding: 36px 24px 56px
+      }
+
+      .svc-arrow {
+        right: 24px
+      }
+
+      /* CLIENTS */
+      #clients {
+        padding-top: 64px;
+        padding-bottom: 64px
+      }
+
+      .clients-heading {
+        margin-bottom: 32px
+      }
+
+      /* STUDIO — section is full-bleed, so clear the padding added by the
+         global mobile rule above; keep heading padded via .studio-hd */
+      #studio {
+        padding-top: 64px;
+        padding-bottom: 64px;
+        padding-left: 0;
+        padding-right: 0
+      }
+
+      .studio-hd {
+        padding: 0 16px;
+        margin-bottom: 36px
+      }
+
+      /* WORK */
+      #work {
+        padding-top: 64px;
+        padding-bottom: 64px;
+        padding-left: 16px;
+        padding-right: 16px
+      }
+
+      .wrow2 {
+        grid-template-columns: 1fr
+      }
+
+      .wc1 .wimg {
+        height: 220px
+      }
+
+      .wc2 .wimg {
+        height: 200px
+      }
+
+      .wc3 .wimg {
+        height: 180px
+      }
+
+      .winfo {
+        padding: 16px 20px
+      }
+
+      /* TESTIMONIALS — 1 col on mobile (overrides the 1279px 2-col rule) */
+      #testimonials {
+        padding-top: 64px;
+        padding-bottom: 64px
+      }
+
+      .test-heading {
+        margin-bottom: 40px
+      }
+
+      .tcard {
+        padding: 28px 20px
+      }
+
+      .test-grid {
+        grid-template-columns: 1fr
+      }
+
+      /* BRANDZUP */
+      #brandzup {
+        padding-top: 64px;
+        padding-bottom: 64px
+      }
+
+      .mock-stats {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      /* FOUNDER */
+      #founder {
+        padding-top: 64px;
+        padding-bottom: 64px
+      }
+
+      .fphoto-wrap {
+        margin-bottom: 24px
+      }
+
+      /* CTA */
+      #cta-bar {
+        padding-top: 80px;
+        padding-bottom: 80px
+      }
+
+      .btn-cta {
+        padding: 16px 36px;
+        font-size: 14px
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 48px 16px 32px
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 28px
+      }
+
+      .footer-btm {
+        flex-direction: column;
+        align-items: flex-start
+      }
+    }
+
+    /* ── SMALL PHONE (≤ 460px) ──────────────────────── */
+    @media(max-width:460px) {
+
+      /* Hero — shrink arrow image and line2 font further */
+      .hero-line2 {
+        font-size: 11.5vw
+      }
+
+      /* .hero-line2 img { width: 7.5vw; height: 7.5vw } */
     }
   </style>
 </head>
@@ -2714,39 +3090,40 @@
       <p class="logos-lbl reveal">Trusted by leading organisations</p>
       <div class="logos-wrap reveal">
         <div class="logos-track">
-          <div class="client-lg"><img src="./assets/client-logos/desi.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/dsm.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/g20.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/garuda.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/govt.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/jsl.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/master.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/phillip.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/prime.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/pwc.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/rsb.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/tata.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/tps.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/trendmicro.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/uttarakhand.png" /></div>
-
-          <!-- Repeat -->
-
-          <div class="client-lg"><img src="./assets/client-logos/desi.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/dsm.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/g20.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/garuda.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/govt.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/jsl.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/master.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/phillip.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/prime.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/pwc.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/rsb.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/tata.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/tps.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/trendmicro.png" /></div>
-          <div class="client-lg"><img src="./assets/client-logos/uttarakhand.png" /></div>
+          <div class="logos-set">
+            <div class="client-lg"><img src="./assets/client-logos/desi.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/dsm.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/g20.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/garuda.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/govt.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/jsl.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/master.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/phillip.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/prime.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/pwc.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/rsb.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/tata.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/tps.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/trendmicro.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/uttarakhand.png" /></div>
+          </div>
+          <div class="logos-set" aria-hidden="true">
+            <div class="client-lg"><img src="./assets/client-logos/desi.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/dsm.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/g20.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/garuda.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/govt.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/jsl.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/master.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/phillip.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/prime.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/pwc.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/rsb.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/tata.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/tps.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/trendmicro.png" /></div>
+            <div class="client-lg"><img src="./assets/client-logos/uttarakhand.png" /></div>
+          </div>
         </div>
       </div>
     </div>
