@@ -414,7 +414,7 @@
       opacity: 0;
       pointer-events: none;
       transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  opacity 0.35s ease;
+        opacity 0.35s ease;
     }
 
     #mobile-float.visible {
@@ -2808,48 +2808,6 @@
       }
     }
 
-    /* Mobile: smaller orbit, all dots still hug the circle edge */
-    @media(max-width:768px) {
-      #thinking {
-        padding: 60px 24px 80px
-      }
-
-      .thinking-layout {
-        gap: 36px
-      }
-
-      #orbit-container {
-        --orbit-radius: 100px;
-        width: 260px;
-        height: 260px
-      }
-
-      .orbit {
-        width: 200px;
-        height: 200px
-      }
-
-      .sun {
-        width: 90px;
-        height: 90px
-      }
-
-      .sun span {
-        font-size: 13px
-      }
-
-      .marker {
-        width: 10px;
-        height: 10px;
-        margin: -5px
-      }
-
-      .marker::after {
-        font-size: 13px;
-        top: 14px
-      }
-    }
-
     /* ═══════════════════════════════════════════════════
        FULL-SITE RESPONSIVE — must come last in cascade
        ═══════════════════════════════════════════════════ */
@@ -2910,12 +2868,73 @@
       .founder-inner {
         gap: 48px
       }
+
+      /* Launching pill — hide from navbar, show as bottom bar with fixed width */
+      .launching-div {
+        display: none
+      }
+
+      #mobile-float {
+        display: flex
+      }
+
+      .mf-launch {
+        width: 300px;
+        margin: 0 auto 16px;
+        border-radius: 32px
+      }
     }
 
     /* ── TABLET narrow + below (< 1280px): 2 testimonial cols ── */
     @media(max-width:1279px) {
       .test-grid {
         grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    /* Mobile: smaller orbit, all dots still hug the circle edge */
+    @media(max-width:768px) {
+      #thinking {
+        padding: 60px 24px 80px
+      }
+
+      #clients .cpanel-desc {
+        font-size: 18px;
+      }
+
+      .thinking-layout {
+        gap: 36px
+      }
+
+      #orbit-container {
+        --orbit-radius: 100px;
+        width: 260px;
+        height: 260px
+      }
+
+      .orbit {
+        width: 200px;
+        height: 200px
+      }
+
+      .sun {
+        width: 90px;
+        height: 90px
+      }
+
+      .sun span {
+        font-size: 13px
+      }
+
+      .marker {
+        width: 10px;
+        height: 10px;
+        margin: -5px
+      }
+
+      .marker::after {
+        font-size: 13px;
+        top: 14px
       }
     }
 
@@ -3105,6 +3124,13 @@
       #mobile-float {
         display: flex
       }
+
+      /* Restore full-width bar on phones */
+      .mf-launch {
+        width: 100%;
+        margin: 0;
+        border-radius: 0
+      }
     }
 
     /* ── SMALL PHONE (≤ 460px) ──────────────────────── */
@@ -3156,10 +3182,6 @@
       <div class="ltext">New experience launching soon</div>
       <video src="./Screen%20Recording%202026-04-16%20at%209.38.18%20AM.mp4" autoplay muted loop playsinline></video>
     </div>
-    <!-- <div class="mf-ctas">
-      <a href="https://bigbrandtheory.in/all-case-study/"><span>View Works</span></a>
-      <a href="https://bigbrandtheory.in/contact/"><span>Start a Conversation</span></a>
-    </div> -->
   </div>
 
   <div class="nav-overlay" id="nav-overlay">
