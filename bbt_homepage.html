@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BigBrandTheory — Clarity Creates Momentum</title>
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -175,23 +176,16 @@
       padding: 16px 48px
     }
 
-    /* nav.nav-dark {
-      background: rgba(8, 8, 8, 0.5);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07)
+    nav.menu-open {
+      background: transparent !important;
+      backdrop-filter: none !important;
     }
 
-    nav.nav-light {
-      background: rgba(245, 245, 240, 0.6);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08)
+    nav.menu-open .launching-div {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translate(-50%, -200%) !important;
     }
-
-    nav.nav-light .hamburger span {
-      background: #080808
-    }
-
-    nav.nav-light .nav-logo-txt {
-      color: rgba(8, 8, 8, 0.6)
-    } */
 
     .launching-div {
       position: absolute;
@@ -207,7 +201,6 @@
       gap: 12px;
       border-radius: 32px;
       padding: 13px 28px;
-      background-color: var(--blue);
       overflow: hidden;
     }
 
@@ -294,12 +287,13 @@
     }
 
     .bbt-mark {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 900;
-      font-size: 26px;
-      color: var(--blue);
-      letter-spacing: -0.04em;
-      line-height: 1
+      width: 70px;
+      overflow: hidden;
+    }
+
+    .bbt-mark img {
+      width: 100%;
+      object-fit: cover;
     }
 
     .hamburger {
@@ -336,8 +330,8 @@
       background: var(--near-black);
       z-index: 999;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s
@@ -348,57 +342,80 @@
       pointer-events: all
     }
 
-    .nav-overlay ul {
-      list-style: none;
-      text-align: center
+    .nav-overlay-center {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      justify-content: center;
     }
 
-    .nav-overlay ul li {
-      overflow: hidden
+    .nav-coming-soon-wrap {
+      /* overflow: hidden; */
     }
 
-    .nav-overlay ul li a {
+    .nav-overlay-center video {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      scale: 3.5;
+      transform: translateY(-120px);
+    }
+
+    .nav-coming-soon {
       font-size: clamp(36px, 5.5vw, 80px);
-      font-weight: 700;
+      font-weight: 300;
       color: #fff;
-      text-decoration: none;
+      text-align: center;
       letter-spacing: -0.03em;
-      display: block;
-      padding: 6px 0;
+      line-height: 1.1;
       transform: translateY(110%);
-      transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), color 0.3s
+      transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.05s;
     }
 
-    .nav-overlay.open ul li a {
-      transform: translateY(0)
+    .nav-overlay.open .nav-coming-soon {
+      transform: translateY(0);
     }
 
-    .nav-overlay ul li:nth-child(1) a {
-      transition-delay: 0.05s
+    .nav-overlay-footer {
+      padding: 100px 48px 60px;
+      display: flex;
+      gap: 60px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 32px;
+      transform: translateY(24px);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) 0.25s, opacity 0.5s ease 0.25s;
     }
 
-    .nav-overlay ul li:nth-child(2) a {
-      transition-delay: 0.1s
+    .nav-overlay.open .nav-overlay-footer {
+      transform: translateY(0);
+      opacity: 1;
     }
 
-    .nav-overlay ul li:nth-child(3) a {
-      transition-delay: 0.15s
+    .nav-footer-col h5 {
+      font-size: 10px;
+      letter-spacing: 0.18ch;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 16px;
     }
 
-    .nav-overlay ul li:nth-child(4) a {
-      transition-delay: 0.2s
+    .nav-footer-col a {
+      display: block;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      transition: color 0.3s;
     }
 
-    .nav-overlay ul li:nth-child(5) a {
-      transition-delay: 0.25s
-    }
-
-    .nav-overlay ul li:nth-child(6) a {
-      transition-delay: 0.3s
-    }
-
-    .nav-overlay ul li a:hover {
-      color: var(--blue)
+    .nav-footer-col a:hover {
+      color: rgba(255, 255, 255, 0.9);
     }
 
     /* ── MOBILE FLOAT WIDGET ─────────────────────────── */
@@ -836,7 +853,8 @@
 
     .logos-wrap {
       overflow: hidden;
-      position: relative
+      position: relative;
+      padding: 6px 0;
     }
 
     .logos-wrap::before,
@@ -863,7 +881,8 @@
       display: flex;
       align-items: center;
       animation: lscroll 28s linear infinite;
-      width: max-content
+      width: max-content;
+      will-change: transform;
     }
 
     .logos-set {
@@ -1530,10 +1549,6 @@
       align-items: center;
     }
 
-    .work-all a {
-      border-radius: 4px;
-    }
-
     .work-all a:hover {
       color: var(--blue) !important;
       border: 1px;
@@ -1578,8 +1593,9 @@
 
     .tcard {
       background: var(--off-white);
-      padding: 40px 36px;
+      padding: 40px 36px 90px;
       position: relative;
+      overflow: hidden;
       transition: background 0.3s, transform 0.4s cubic-bezier(0.19, 1, 0.22, 1)
     }
 
@@ -1608,9 +1624,20 @@
     }
 
     .tcard-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
       display: flex;
       align-items: center;
       gap: 10px;
+      padding: 28px 36px 32px;
+      background: linear-gradient(to top, var(--off-white) 0%, transparent 100%);
+    }
+
+    .tcard:hover .tcard-info {
+      background: linear-gradient(to top, #fff 0%, transparent 100%);
     }
 
     .tcard-avatar {
@@ -1668,6 +1695,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
+      transition: opacity 0.3s, background 0.3s, border-color 0.3s, transform 0.3s;
       transform: translate(-50%, -50%);
       width: 56px;
       height: 56px;
@@ -1693,6 +1721,41 @@
       margin-left: 3px
     }
 
+    .vfull {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 3;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 7px;
+      cursor: pointer;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s, background 0.3s;
+    }
+
+    .tvideo:hover .vfull {
+      opacity: 1;
+    }
+
+    .vfull:hover {
+      background: rgba(0, 0, 0, 0.75);
+    }
+
+    .vfull svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .tvideo .ttxt {
       color: rgba(255, 255, 255, 0.75);
       position: relative;
@@ -1711,14 +1774,68 @@
       z-index: 1
     }
 
+    .tvideo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tvideo-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tvideo-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 28px 24px 32px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+    }
+
+    .tvideo-info .tauthor {
+      color: #fff;
+    }
+
+    .tvideo-info .trole {
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 3px;
+    }
+
     /* BRANDZUP */
     #brandzup {
       background: var(--off-white);
       padding: 130px 48px;
-      overflow: hidden
+      overflow: hidden;
+      position: relative;
     }
 
+    #brandzup video {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* #brandzup .brandzup-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: linear-gradient(90deg, transparent 0%, #ffff 90%);
+    } */
+
     .bz-inner {
+      position: relative;
+      z-index: 10;
       max-width: 1300px;
       margin: 0 auto;
       display: grid;
@@ -1743,7 +1860,7 @@
     .bz-sub {
       font-size: clamp(14px, 1.6vw, 19px);
       font-weight: 300;
-      color: var(--mid-grey);
+      color: var(--near-black);
       line-height: 1.65;
       max-width: 460px;
       letter-spacing: 0.1ch;
@@ -1752,7 +1869,7 @@
     .bz-tl {
       font-size: 14px;
       font-weight: 600;
-      color: var(--blue);
+      color: var(--dark);
       letter-spacing: 0.04em;
       margin-top: 20px
     }
@@ -2777,6 +2894,11 @@
         padding: 80px 40px 100px
       }
 
+      .svc-animated-video {
+        width: 50px;
+        height: 50px;
+      }
+
       .thinking-layout {
         display: flex;
         flex-direction: column;
@@ -2972,6 +3094,15 @@
         display: none
       }
 
+      .nav-overlay {
+        padding: 90px 24px 40px;
+      }
+
+      .nav-overlay-footer {
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+
       .launching-div {
         display: none
       }
@@ -3087,7 +3218,15 @@
       }
 
       .tcard {
-        padding: 28px 20px
+        padding: 28px 20px 80px;
+      }
+
+      .tcard-info {
+        padding: 20px 20px 16px;
+      }
+
+      .tvideo {
+        min-height: 300px;
       }
 
       .test-grid {
@@ -3169,6 +3308,266 @@
 
       /* .hero-line2 img { width: 7.5vw; height: 7.5vw } */
     }
+
+    /* ── CONTACT MODAL ────────────────────────────────── */
+    #contact-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px
+    }
+
+    #contact-modal.open {
+      display: flex
+    }
+
+    .cm-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 8, 8, 0.78);
+      backdrop-filter: blur(8px);
+      cursor: pointer
+    }
+
+    .cm-box {
+      letter-spacing: .15ch;
+      position: relative;
+      background: #fff;
+      /* border-radius: 16px; */
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 48px 48px 40px;
+      z-index: 1;
+      animation: cmSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(14, 8, 255, 0.25) transparent
+    }
+
+    .cm-box::-webkit-scrollbar {
+      width: 4px
+    }
+
+    .cm-box::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    .cm-box::-webkit-scrollbar-thumb {
+      background: rgba(14, 8, 255, 0.25);
+      border-radius: 99px
+    }
+
+    .cm-box::-webkit-scrollbar-thumb:hover {
+      background: rgba(14, 8, 255, 0.5)
+    }
+
+    @keyframes cmSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px) scale(0.97)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    .cm-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--mid-grey);
+      font-size: 24px;
+      line-height: 1;
+      padding: 4px 8px;
+      transition: color 0.2s
+    }
+
+    .cm-close:hover {
+      color: var(--near-black)
+    }
+
+    .cm-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--near-black);
+      margin-bottom: 6px;
+      letter-spacing: .14ch;
+    }
+
+    .cm-subtitle {
+      font-size: 14px;
+      color: var(--mid-grey);
+      margin-bottom: 32px;
+      font-weight: 300;
+      letter-spacing: .14ch;
+    }
+
+    .cm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 20px
+    }
+
+    .cm-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      letter-spacing: .14ch;
+    }
+
+    .cm-field.full {
+      grid-column: 1 / -1
+    }
+
+    .cm-field label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--near-black);
+      text-transform: uppercase
+    }
+
+    .cm-field input,
+    .cm-field select,
+    .cm-field textarea {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--near-black);
+      background: var(--off-white);
+      border: 1.5px solid transparent;
+      /* border-radius: 8px; */
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      width: 100%;
+      box-sizing: border-box;
+      letter-spacing: .14ch;
+    }
+
+    .cm-field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8a88' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+      letter-spacing: .14ch;
+    }
+
+    .cm-field textarea {
+      resize: vertical;
+      min-height: 100px;
+      letter-spacing: .14ch;
+    }
+
+    .cm-field input:focus,
+    .cm-field select:focus,
+    .cm-field textarea:focus {
+      border-color: var(--blue);
+      background: #fff
+    }
+
+    .cm-field input::placeholder,
+    .cm-field textarea::placeholder {
+      color: #b0b0ae;
+      letter-spacing: .14ch;
+    }
+
+    .cm-submit {
+      margin-top: 24px;
+      width: 100%;
+      letter-spacing: .14ch;
+      padding: 16px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      /* border-radius: 8px; */
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s
+    }
+
+    .cm-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(14, 8, 255, 0.35)
+    }
+
+    /* Tablet — single column, tighter padding */
+    @media(max-width:1024px) {
+      .cm-grid {
+        grid-template-columns: 1fr
+      }
+
+      .cm-field.full {
+        grid-column: 1
+      }
+
+      .cm-box {
+        padding: 40px 36px 32px;
+        max-width: 560px
+      }
+    }
+
+    /* Mobile — bottom sheet */
+    @media(max-width:640px) {
+      #contact-modal {
+        align-items: flex-end;
+        padding: 0 0 16px
+      }
+
+      .cm-box {
+        width: calc(100% - 24px);
+        max-width: 100%;
+        max-height: 88vh;
+        border-radius: 20px;
+        padding: 28px 20px 32px;
+        animation: cmSheetUp 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both
+      }
+
+      @keyframes cmSheetUp {
+        from {
+          transform: translateY(110%)
+        }
+
+        to {
+          transform: translateY(0)
+        }
+      }
+
+      .cm-title {
+        font-size: 22px
+      }
+
+      .cm-subtitle {
+        margin-bottom: 24px
+      }
+
+      .cm-grid {
+        gap: 12px
+      }
+
+      .cm-field input,
+      .cm-field select,
+      .cm-field textarea {
+        font-size: 16px
+      }
+    }
   </style>
 </head>
 
@@ -3189,7 +3588,8 @@
       <div class="ltext"><span>New experience</span style="letter-spacing: 0.2ch"> launching soon</div>
 
       <!-- Background video -->
-      <video src="./Screen%20Recording%202026-04-16%20at%209.38.18%20AM.mp4" autoplay muted loop playsinline></video>
+      <video style="transform: translateY(-9px);" src="./Screen%20Recording%202026-04-16%20at%209.38.18%20AM.mp4"
+        autoplay muted loop playsinline></video>
     </div>
 
     <div class="nav-cta">
@@ -3211,14 +3611,38 @@
   </div>
 
   <div class="nav-overlay" id="nav-overlay">
-    <ul>
-      <li><a href="#stats" onclick="toggleMenu()">About</a></li>
-      <li><a href="#services" onclick="toggleMenu()">Services</a></li>
-      <li><a href="#clients" onclick="toggleMenu()">Clients</a></li>
-      <li><a href="#work" onclick="toggleMenu()">Work</a></li>
-      <li><a href="#thinking" onclick="toggleMenu()">Thinking</a></li>
-      <li><a href="#cta-bar" onclick="toggleMenu()">Contact</a></li>
-    </ul>
+    <div class="nav-overlay-center">
+      <video src="./Screen Recording 2026-04-16 at 9.38.18 AM.mp4" autoplay playsinline muted loop></video>
+      <div class="nav-coming-soon-wrap">
+        <p class="nav-coming-soon">New Experience<br><em
+            style="font-family: var(--font-serif); font-weight: 600;">Coming Soon</em></p>
+      </div>
+    </div>
+    <div class="nav-overlay-footer">
+      <div class="nav-footer-col">
+        <h5>Featured Work</h5>
+        <a href="https://bigbrandtheory.in/garuda-brand-refresh/" onclick="toggleMenu()">Garuda Aerospace</a><a
+          href="https://bigbrandtheory.in/trend-micro-brand-refresh" onclick="toggleMenu()">Trend Micro</a><a
+          href="https://bigbrandtheory.in/news/prime-group-appoints-bbt-for-global-real-estate-campaign/"
+          onclick="toggleMenu()">Prime
+          Max</a><a href="https://bigbrandtheory.in/the-pahadi-story-masala-chai" onclick="toggleMenu()">Pahadi
+          Story</a>
+      </div>
+      <div class="nav-footer-col">
+        <h5>Case Studies</h5>
+        <a onclick="toggleMenu()" href="http://bigbrandtheory.in/desi-nutri/">Desi Naturi</a><a onclick="toggleMenu()"
+          href="http://bigbrandtheory.in/mantra-case-study">Mantra Technologies</a><a onclick="toggleMenu()"
+          href="http://bigbrandtheory.in/otp-express-branding-case-study">OTP</a><a onclick="toggleMenu()"
+          href="http://bigbrandtheory.in/spirit-of-the-tribe-branding-case-study">Spirit of the Tribe</a>
+      </div>
+      <div class="nav-footer-col">
+        <h5>Connect</h5>
+        <a onclick="toggleMenu()" href="https://bigbrandtheory.in" target="_blank">Website</a>
+        <a onclick="toggleMenu()" href="#">LinkedIn</a>
+        <a onclick="toggleMenu()" href="#">Instagram</a>
+        <a onclick="toggleMenu()" href="mailto:hello@bigbrandtheory.in">hello@bigbrandtheory.in</a>
+      </div>
+    </div>
   </div>
 
   <section id="hero">
@@ -3383,9 +3807,7 @@
         <!-- LEFT: 2-col image tile grid -->
         <div class="clients-tiles" id="clients-tiles">
           <div class="ctile active" data-panel="0">
-            <img class="ctile-img"
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=80"
-              alt="Founder-led companies">
+            <img class="ctile-img" src="./assets/partner-section/img 1.jpeg" alt="Founder-led companies">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Founder-led companies entering their next phase</span>
@@ -3396,9 +3818,7 @@
           </div>
 
           <div class="ctile" data-panel="1">
-            <img class="ctile-img"
-              src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80"
-              alt="Enterprises">
+            <img class="ctile-img" src="./assets/partner-section/img 2.jpeg" alt="Enterprises">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Enterprises undergoing brand transformation</span>
@@ -3409,9 +3829,7 @@
           </div>
 
           <div class="ctile" data-panel="2">
-            <img class="ctile-img"
-              src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&auto=format&fit=crop&q=80"
-              alt="Real Estate">
+            <img class="ctile-img" src="./assets/partner-section/img 3.jpeg" alt="Real Estate">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Real estate developers launching landmark projects</span>
@@ -3422,9 +3840,7 @@
           </div>
 
           <div class="ctile" data-panel="3">
-            <img class="ctile-img"
-              src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&auto=format&fit=crop&q=80"
-              alt="Consumer & D2C">
+            <img class="ctile-img" src="./assets/partner-section/img 4.jpeg" alt="Consumer & D2C">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Consumer and D2C brands building differentiation</span>
@@ -3435,9 +3851,7 @@
           </div>
 
           <div class="ctile" data-panel="4">
-            <img class="ctile-img"
-              src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&auto=format&fit=crop&q=80"
-              alt="Purpose-led">
+            <img class="ctile-img" src="./assets/partner-section/img 5.jpeg" alt="Purpose-led">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Purpose-led and social impact organisations</span>
@@ -3466,9 +3880,7 @@
         <div class="clients-panel-wrap">
           <div class="cpanel active" data-panel="0">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img"
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80"
-                alt="Founder-led companies">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 1.jpeg" alt="Founder-led companies">
               <div class="cpanel-bottom">
                 <p class="cpanel-desc">When founders reach an inflection point, brand clarity is what creates the next
                   leap. We work at the leadership level to unlock the next chapter of growth.</p>
@@ -3479,9 +3891,7 @@
 
           <div class="cpanel" data-panel="1">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img"
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&auto=format&fit=crop&q=80"
-                alt="Enterprises">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 2.jpeg" alt="Enterprises">
               <div class="cpanel-bottom">
                 <p class="cpanel-desc">Large organisations often outgrow their brand. We help enterprises reshape
                   perception, realign internally, and emerge with a brand that matches their ambition.</p>
@@ -3492,9 +3902,7 @@
 
           <div class="cpanel" data-panel="2">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img"
-                src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80"
-                alt="Real Estate">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 3.jpeg" alt="Real Estate">
               <div class="cpanel-bottom">
                 <p class="cpanel-desc">In real estate, brand is the difference between a property and a destination. We
                   craft narratives that make developments iconic before the first brick is laid.</p>
@@ -3505,9 +3913,7 @@
 
           <div class="cpanel" data-panel="3">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img"
-                src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&auto=format&fit=crop&q=80"
-                alt="Consumer D2C">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 4.jpeg" alt="Consumer D2C">
               <div class="cpanel-bottom">
 
                 <p class="cpanel-desc">Consumer markets are crowded. We help D2C brands carve out distinctive
@@ -3519,9 +3925,7 @@
 
           <div class="cpanel" data-panel="4">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img"
-                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&auto=format&fit=crop&q=80"
-                alt="Purpose-led">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 5.jpeg" alt="Purpose-led">
               <div class="cpanel-bottom">
 
                 <p class="cpanel-desc">Purpose without clarity is noise. We help social impact organisations communicate
@@ -3534,7 +3938,7 @@
           <div class="cpanel" data-panel="5">
             <div class="cpanel-hero">
               <img class="cpanel-hero-img"
-                src="https://images.unsplash.com/photo-1498049794561-7780e7231661?w=1200&auto=format&fit=crop&q=80"
+                src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&auto=format&fit=crop&q=80"
                 alt="New Ventures">
               <div class="cpanel-bottom">
 
@@ -3614,7 +4018,7 @@
                 <span class="wsector">Aviation / Aerospace</span>
                 <span class="wtag">Brand Creation</span>
               </div>
-              <div class="wtitle">Garuda</div>
+              <div class="wtitle">Garuda Aerospace</div>
             </div>
           </div>
         </a>
@@ -3628,10 +4032,10 @@
               <div class="woverlay"></div>
               <div class="winfo">
                 <div class="winfo-top">
-                  <span class="wsector">Finance</span>
+                  <span class="wsector">Cybersecurity</span>
                   <span class="wtag">Brand Transformation</span>
                 </div>
-                <div class="wtitle">Trend</div>
+                <div class="wtitle">Trend Micro</div>
               </div>
             </div>
           </a>
@@ -3646,7 +4050,7 @@
                   <span class="wsector">Real Estate</span>
                   <span class="wtag">Brand Launch</span>
                 </div>
-                <div class="wtitle">Prime</div>
+                <div class="wtitle">Prime Max</div>
               </div>
             </div>
           </a>
@@ -3684,30 +4088,30 @@
 
       <div class="test-grid">
         <div class="tcard reveal" style="transition-delay:0.05s"><span class="tqm">&ldquo;</span>
-          <p class="ttxt">BBT didn&#39;t just build our brand — they gave us a language to talk about ourselves with
-            conviction. The clarity they brought transformed how we operate internally and externally.</p>
+          <p class="ttxt">BBT brought meaning, magic, and momentum to our 50-year milestone. EVOLVE became a powerful
+            story that touched every RSBian.</p>
           <div class="tcard-info">
             <div class="tcard-avatar">
               <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" />
             </div>
             <div class="tcard-user-info">
-              <div class="tauthor">Rahul Sharma</div>
-              <div class="trole">Founder &amp; CEO, VentureX</div>
+              <div class="tauthor">S.K Behera</div>
+              <div class="trole">Co-Founder, VC and Managing Director RSB</div>
             </div>
           </div>
         </div>
 
         <div class="tcard reveal" style="transition-delay:0.1s"><span class="tqm">&ldquo;</span>
-          <p class="ttxt">Working with BigBrandTheory was a turning point for us. Their strategic depth combined with
-            creative execution is truly rare — especially for a brand at our scale of transformation.</p>
+          <p class="ttxt">With YOLO, we didn’t just sell homes, we sold an attitude. BBT captured that with absolute
+            clarity.</p>
 
           <div class="tcard-info">
             <div class="tcard-avatar">
               <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" />
             </div>
             <div class="tcard-user-info">
-              <div class="tauthor">Priya Mehta</div>
-              <div class="trole">CMO, Enterprise Holdings</div>
+              <div class="tauthor">Christina Fernando</div>
+              <div class="trole">Head of Growth, Prime Group</div>
             </div>
           </div>
         </div>
@@ -3716,23 +4120,36 @@
           <div class="vplay"><svg viewBox="0 0 24 24">
               <polygon points="5,3 19,12 5,21" />
             </svg></div>
-          <p class="ttxt">&ldquo;The brand clarity we achieved with BBT gave us the confidence to enter new markets
-            within six months of launch.&rdquo;</p>
-          <div class="tauthor">Aditya Singh</div>
-          <div class="trole">Managing Director, Prime Spaces</div>
+          <button class="vfull" aria-label="Fullscreen"><svg viewBox="0 0 24 24">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
+            </svg></button>
+          <video class="tvideo-video" src="./assets/testimonials/Rithika Testimonial.mp4"
+            poster="./assets/testimonials/thumb-1.jpg" playsinline></video>
+          <div class="tvideo-info">
+            <div class="tcard-avatar">
+              <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" />
+            </div>
+            <div class="tcard-user-info">
+              <div class="tauthor">Rithika Mohan</div>
+              <div class="trole">Co - Founder & CAO | Garuda Aerospace</div>
+            </div>
+          </div>
         </div>
 
         <div class="tcard reveal" style="transition-delay:0.2s"><span class="tqm">&ldquo;</span>
-          <p class="ttxt">They challenged our assumptions and helped us see our brand through our customers&#39; eyes.
-            That outside-in perspective was invaluable during our repositioning.</p>
+          <p class="ttxt">We wanted a brand that was deeply rooted yet globally relevant. BBT captured our essence and
+            translated it into every detail.</p>
 
           <div class="tcard-info">
             <div class="tcard-avatar">
               <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" />
             </div>
             <div class="tcard-user-info">
-              <div class="tauthor">Sunita Kapoor</div>
-              <div class="trole">Director, Pahadi Story</div>
+              <div class="tauthor">Gautam Nair</div>
+              <div class="trole">Founder, Pranaa</div>
             </div>
           </div>
         </div>
@@ -3741,22 +4158,35 @@
           <div class="vplay"><svg viewBox="0 0 24 24">
               <polygon points="5,3 19,12 5,21" />
             </svg></div>
-          <p class="ttxt">&ldquo;BBT brought structure to our vision. We went from a great idea to a compelling brand in
-            under four months.&rdquo;</p>
-          <div class="tauthor">Vikram Nair</div>
-          <div class="trole">Co-Founder, Trend Capital</div>
+          <button class="vfull" aria-label="Fullscreen"><svg viewBox="0 0 24 24">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
+            </svg></button>
+          <video class="tvideo-video" src="./assets/testimonials/Trend review.mp4"
+            poster="./assets/testimonials/thumb-2.jpg" playsinline></video>
+          <div class="tvideo-info">
+            <div class="tcard-avatar">
+              <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" />
+            </div>
+            <div class="tcard-user-info">
+              <div class="tauthor">Tanya Leeson</div>
+              <div class="trole">VP, Corporate Marketing | Trend Micro</div>
+            </div>
+          </div>
         </div>
 
         <div class="tcard reveal" style="transition-delay:0.3s"><span class="tqm">&ldquo;</span>
-          <p class="ttxt">The depth of thinking that goes into every BBT engagement is what sets them apart. This
-            isn&#39;t a creative shop — it&#39;s a strategic partner that happens to excel at design.</p>
+          <p class="ttxt">BBT helped us transform simple tea boxes into experiences people wanted to gift again and
+            again. Their design brought our story alive — and made every cup feel special.</p>
           <div class="tcard-info">
             <div class="tcard-avatar">
               <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" />
             </div>
             <div class="tcard-user-info">
-              <div class="tauthor">Manish Gupta</div>
-              <div class="trole">President, Bharat Group</div>
+              <div class="tauthor">Shweta Shah</div>
+              <div class="trole">Co-Founder, The Pahadi Story</div>
             </div>
           </div>
         </div>
@@ -3795,8 +4225,8 @@
   <section id="brandzup">
     <div class="bz-inner">
       <div class="bz-top reveal">
-        <h2 class="bz-headline reveal">Coming Soon |
-          <em style="color: var(--blue);">Brandzup</em>
+        <h2 class="bz-headline reveal" style="color: var(--cream);">Coming Soon |
+          <em style="color: var(--dark);">Brandzup</em>
         </h2>
 
         <p class="bz-sub">A new platform to manage and activate your brand. One place for brand strategy, guidelines,
@@ -3804,80 +4234,12 @@
         <p class="bz-tl">Goodbye brandbook.pdf &nbsp;&#8594;&nbsp; Hello Brandzup</p>
       </div>
       <div class="bz-mockup reveal" style="transition-delay:0.2s">
-        <!-- <div class="mock-bar">
-          <div class="mdot" style="background:#ff5f57"></div>
-          <div class="mdot" style="background:#ffbd2e"></div>
-          <div class="mdot" style="background:#28c840"></div>
-          <div class="mock-url">app.brandzup.io &#8212; Brand Command Centre</div>
-        </div>
-        <div class="mock-body">
-          <div class="mock-sb">
-            <div class="mock-sb-logo">Bz</div>
-            <div class="mnav on">Dashboard</div>
-            <div class="mnav">Brand DNA</div>
-            <div class="mnav">Guidelines</div>
-            <div class="mnav">Assets</div>
-            <div class="mnav">Campaigns</div>
-            <div class="mnav">Analytics</div>
-          </div>
-          <div class="mock-main">
-            <div class="mock-stats">
-              <div>
-                <div class="mstat-v" style="color:var(--blue)">94%</div>
-                <div class="mstat-l">Brand Consistency</div>
-              </div>
-              <div>
-                <div class="mstat-v">42</div>
-                <div class="mstat-l">Active Assets</div>
-              </div>
-              <div>
-                <div class="mstat-v" style="color:#28c840">+18%</div>
-                <div class="mstat-l">Brand Recall</div>
-              </div>
-              <div>
-                <div class="mstat-v">7</div>
-                <div class="mstat-l">Team Members</div>
-              </div>
-            </div>
-            <div class="mock-cards">
-              <div class="mcard">
-                <div class="mc-title">Brand Usage by Channel</div>
-                <div class="mbar-row"><span class="mbar-lbl">Digital</span>
-                  <div class="mbar-bg">
-                    <div class="mbar-fill" style="width:88%;background:var(--blue)"></div>
-                  </div>
-                </div>
-                <div class="mbar-row"><span class="mbar-lbl">Print</span>
-                  <div class="mbar-bg">
-                    <div class="mbar-fill" style="width:64%;background:rgba(255,255,255,0.25)"></div>
-                  </div>
-                </div>
-                <div class="mbar-row"><span class="mbar-lbl">Social</span>
-                  <div class="mbar-bg">
-                    <div class="mbar-fill" style="width:76%;background:var(--blue)"></div>
-                  </div>
-                </div>
-                <div class="mbar-row"><span class="mbar-lbl">OOH</span>
-                  <div class="mbar-bg">
-                    <div class="mbar-fill" style="width:42%;background:rgba(255,255,255,0.25)"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="mcard">
-                <div class="mc-title">Active Brand Pillars</div>
-                <div class="mtag-row">
-                  <span class="mtag">Vision</span><span class="mtag">Voice</span><span class="mtag">Value</span><span
-                    class="mtag">Identity</span><span class="mtag">Messaging</span><span class="mtag">Tone of
-                    Voice</span><span class="mtag">Positioning</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <img src="./assets/Brandzup UI 2.png" alt="Brandzup mockup" />
+        <img src="./assets/PAHADI.png" alt="Brandzup mockup" />
       </div>
     </div>
+
+    <video src="./assets/pink-background.mp4" autoplay muted loop playsinline></video>
+    <div class="brandzup-overlay"></div>
   </section>
 
   <section id="cta-bar">
@@ -3885,7 +4247,7 @@
       <h2 class="cta-headline reveal">Momentum begins<br>with <em>clarity.</em></h2>
       <p class="cta-body reveal">If you&#39;re building, transforming or launching a brand and want to do it with
         conviction &#8212;</p>
-      <a href="mailto:hello@bigbrandtheory.in" class="btn-cta reveal"><span>Start a Conversation</span></a>
+      <button class="btn-cta reveal" onclick="openContactModal()"><span>Start a Conversation</span></button>
     </div>
   </section>
 
@@ -3893,27 +4255,34 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <span class="bbt-mark">BBT</span>
+          <div class="bbt-mark">
+            <img src="./assets/image 10.png" alt="BBT Blue Logo" />
+          </div>
           <div class="footer-brand">BigBrandTheory Consulting Pvt. Ltd.</div>
           <p class="footer-tl">India&#39;s leading brand strategy and identity consultancy, partnering with founders and
             leadership teams. Mumbai, India.</p>
         </div>
         <div class="footer-col">
-          <h5>Services</h5><a href="#services">Brand Creation</a><a href="#services">Brand Transformation</a><a
-            href="#services">Brand Launch</a><a href="#services">Brand Growth</a>
+          <h5>Featured Work</h5><a href="https://bigbrandtheory.in/garuda-brand-refresh/">Garuda Aerospace</a><a
+            href="https://bigbrandtheory.in/trend-micro-brand-refresh">Trend Micro</a><a
+            href="https://bigbrandtheory.in/news/prime-group-appoints-bbt-for-global-real-estate-campaign/">Prime
+            Max</a><a href="https://bigbrandtheory.in/the-pahadi-story-masala-chai">Pahadi Story</a>
         </div>
         <div class="footer-col">
-          <h5>Studio</h5><a href="#work">Our Work</a><a href="#studio">The Studio</a><a href="#founder">About</a><a
-            href="#thinking">Thinking</a>
+          <h5>Case Studies</h5><a href="http://bigbrandtheory.in/desi-nutri/">Desi Naturi</a><a
+            href="http://bigbrandtheory.in/mantra-case-study">Mantra Technologies</a><a
+            href="http://bigbrandtheory.in/otp-express-branding-case-study">OTP</a><a
+            href="http://bigbrandtheory.in/spirit-of-the-tribe-branding-case-study">Spirit of the Tribe</a>
         </div>
         <div class="footer-col">
           <h5>Connect</h5><a href="https://bigbrandtheory.in" target="_blank">Website</a><a href="#">LinkedIn</a><a
             href="#">Instagram</a><a href="mailto:hello@bigbrandtheory.in">hello@bigbrandtheory.in</a>
+          <a href="tel:+91987654312">+91 98654321</a>
         </div>
       </div>
       <div class="footer-btm">
-        <span class="footer-copy">&#169; 2025 BigBrandTheory Consulting Pvt. Ltd. All rights reserved.</span>
-        <div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+        <span class="footer-copy">&#169; 2026 BigBrandTheory Consulting Pvt. Ltd. All rights reserved.</span>
+        <!-- <div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div> -->
       </div>
     </div>
   </footer>
@@ -3937,6 +4306,42 @@
     document.querySelectorAll('a,button,.svc-card,.wcard-lg,.wcard-sm,.tcard,.tvideo,.stat-card').forEach(function (el) {
       el.addEventListener('mouseenter', function () { cur.style.width = '16px'; cur.style.height = '16px'; ring.style.width = '64px'; ring.style.height = '64px'; ring.style.opacity = '0.3'; });
       el.addEventListener('mouseleave', function () { cur.style.width = '10px'; cur.style.height = '10px'; ring.style.width = '40px'; ring.style.height = '40px'; ring.style.opacity = '0.7'; });
+    });
+
+    // TVIDEO — click to play/pause, fullscreen button
+    document.querySelectorAll('.tvideo').forEach(function (card) {
+      var video = card.querySelector('.tvideo-video');
+      var btn = card.querySelector('.vplay');
+      var fullBtn = card.querySelector('.vfull');
+      if (!video) return;
+      card.style.cursor = 'pointer';
+
+      card.addEventListener('click', function (e) {
+        if (fullBtn && fullBtn.contains(e.target)) return;
+        if (video.paused) {
+          video.play();
+          btn.style.opacity = '0';
+          btn.style.pointerEvents = 'none';
+        } else {
+          video.pause();
+          btn.style.opacity = '1';
+          btn.style.pointerEvents = '';
+        }
+      });
+
+      if (fullBtn) {
+        fullBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (video.requestFullscreen) video.requestFullscreen();
+          else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+          else if (video.mozRequestFullScreen) video.mozRequestFullScreen();
+        });
+      }
+
+      video.addEventListener('ended', function () {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = '';
+      });
     });
 
     // NAV SCROLL — compact padding only
@@ -3992,6 +4397,7 @@
     function toggleMenu() {
       document.getElementById('ham').classList.toggle('active');
       document.getElementById('nav-overlay').classList.toggle('open');
+      document.getElementById('main-nav').classList.toggle('menu-open');
       document.body.style.overflow = document.getElementById('nav-overlay').classList.contains('open') ? 'hidden' : '';
     }
 
@@ -4117,6 +4523,34 @@
     });
 
     // STUDIO CAROUSEL
+    /* ── CONTACT MODAL ─────────────────────────────────── */
+    function openContactModal() {
+      document.getElementById('contact-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeContactModal() {
+      document.getElementById('contact-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeContactModal();
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = this.querySelector('.cm-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      setTimeout(function () {
+        btn.textContent = 'Sent! We\'ll be in touch.';
+        setTimeout(function () {
+          closeContactModal();
+          btn.textContent = 'Submit';
+          btn.disabled = false;
+        }, 1800);
+      }, 1200);
+    });
+
     var studioPos = 0;
     function slideStudio(dir) {
       var track = document.getElementById('studio-track');
@@ -4127,6 +4561,89 @@
       track.style.transform = 'translateX(' + studioPos + 'px)';
     }
   </script>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="cm-title">
+    <div class="cm-backdrop" onclick="closeContactModal()"></div>
+    <div class="cm-box">
+      <button class="cm-close" onclick="closeContactModal()" aria-label="Close">&#x2715;</button>
+      <p class="cm-title" id="cm-title">Start a Conversation</p>
+      <p class="cm-subtitle">Tell us about your brand. We'll get back within 24 hours.</p>
+
+      <form id="contact-form" novalidate>
+        <div class="cm-grid">
+
+          <div class="cm-field">
+            <label for="cm-name">Name</label>
+            <input id="cm-name" type="text" placeholder="Your full name" required>
+          </div>
+
+          <div class="cm-field">
+            <label for="cm-company">Company</label>
+            <input id="cm-company" type="text" placeholder="Company / Brand name" required>
+          </div>
+
+          <div class="cm-field">
+            <label for="cm-phone">Phone</label>
+            <input id="cm-phone" type="tel" placeholder="+91 98765 43210">
+          </div>
+
+          <div class="cm-field">
+            <label for="cm-email">Email</label>
+            <input id="cm-email" type="email" placeholder="you@company.com" required>
+          </div>
+
+          <div class="cm-field">
+            <label for="cm-budget">Budget Range</label>
+            <select id="cm-budget">
+              <option value="" disabled selected>Select a range</option>
+              <option>Under ₹5 Lakhs</option>
+              <option>₹5 – 15 Lakhs</option>
+              <option>₹15 – 30 Lakhs</option>
+              <option>₹30 – 50 Lakhs</option>
+              <option>₹50 Lakhs – 1 Cr</option>
+              <option>Above ₹1 Cr</option>
+            </select>
+          </div>
+
+          <div class="cm-field">
+            <label for="cm-services">Services Required</label>
+            <select id="cm-services">
+              <option value="" disabled selected>Select a service</option>
+              <option>Brand Strategy</option>
+              <option>Brand Identity & Design</option>
+              <option>Digital Marketing</option>
+              <option>Content & Campaigns</option>
+              <option>Website & Digital Presence</option>
+              <option>Brand Audit</option>
+              <option>Full Brand Build</option>
+            </select>
+          </div>
+
+          <div class="cm-field full">
+            <label for="cm-outcome">Primary Outcome</label>
+            <select id="cm-outcome">
+              <option value="" disabled selected>What do you want to achieve?</option>
+              <option>Launch a new brand</option>
+              <option>Rebrand / Refresh existing brand</option>
+              <option>Grow brand awareness</option>
+              <option>Enter a new market</option>
+              <option>Improve brand consistency</option>
+              <option>Drive leads & conversions</option>
+            </select>
+          </div>
+
+          <div class="cm-field full">
+            <label for="cm-message">Tell Us About Your Requirement</label>
+            <textarea id="cm-message" placeholder="Share any context — goals, timelines, challenges…"></textarea>
+          </div>
+
+        </div>
+        <button type="submit" class="cm-submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
 </body>
 
 </html>
