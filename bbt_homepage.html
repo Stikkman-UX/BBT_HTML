@@ -766,18 +766,18 @@
     }
 
     .client-lg {
-      font-family: 'Outfit', sans-serif;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+      height: 35px;
+      width: auto;
+      overflow: hidden;
       color: var(--light-grey);
       white-space: nowrap;
       transition: color 0.3s;
-      text-transform: uppercase
     }
 
-    .client-lg:hover {
-      color: #555
+    .client-lg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     /* SERVICES */
@@ -802,7 +802,6 @@
     }
 
     .services-heading em {
-      font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-weight: 400;
       color: var(--blue);
@@ -1592,173 +1591,6 @@
     .tvideo .trole {
       position: relative;
       z-index: 1
-    }
-
-    /* THINKING */
-    #thinking {
-      background: var(--blue);
-      padding: 140px 48px;
-      position: relative;
-      overflow: hidden
-    }
-
-    .thinking-inner {
-      max-width: 920px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1
-    }
-
-    .thinking-headline {
-      font-size: clamp(40px, 6vw, 94px);
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.04em;
-      line-height: 1.0;
-      margin-bottom: 56px
-    }
-
-    .thinking-headline em {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 500
-    }
-
-    .thinking-body p {
-      font-size: clamp(16px, 1.8vw, 22px);
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.72);
-      line-height: 1.7;
-      margin-bottom: 20px;
-      letter-spacing: 0.15ch;
-    }
-
-    .thinking-pillars {
-      display: flex;
-      flex-direction: column;
-      margin-top: 48px
-    }
-
-    .tpillar {
-      padding: 22px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      transition: padding-left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-      cursor: default
-    }
-
-    .tpillar:hover {
-      padding-left: 16px
-    }
-
-    .parr {
-      font-size: 20px;
-      color: rgba(255, 255, 255, 0.35);
-      font-weight: 300
-    }
-
-    .ptxt {
-      font-size: clamp(18px, 2.2vw, 28px);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.01em;
-      flex: 1
-    }
-
-    .psub {
-      font-size: 14px;
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.45);
-      text-align: right
-    }
-
-    /* FOUNDER */
-    #founder {
-      background: var(--near-black);
-      padding: 130px 48px
-    }
-
-    .founder-inner {
-      max-width: 1300px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center
-    }
-
-    .fphoto-wrap {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: #151513;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center
-    }
-
-    .fphoto-bg {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      background: linear-gradient(160deg, #151513, rgba(14, 8, 255, 0.12))
-    }
-
-    .fsilhouette {
-      width: 72%
-    }
-
-    .flabel {
-      position: absolute;
-      bottom: -18px;
-      left: -18px;
-      background: var(--blue);
-      padding: 20px 28px
-    }
-
-    .flabel span {
-      display: block;
-      font-size: 10px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.65);
-      margin-bottom: 4px
-    }
-
-    .flabel strong {
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff
-    }
-
-    .fcontent {}
-
-    .fheading {
-      font-size: clamp(26px, 3.2vw, 46px);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.03em;
-      margin-bottom: 32px;
-      line-height: 1.22
-    }
-
-    .fheading em {
-      font-style: italic;
-      color: var(--blue)
-    }
-
-    .fbody p {
-      font-size: clamp(14px, 1.5vw, 18px);
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.55);
-      line-height: 1.85;
-      margin-bottom: 20px;
-      letter-spacing: 0.15ch;
     }
 
     /* BRANDZUP */
@@ -2556,7 +2388,7 @@
     /* ─── OUR THINKING (rework) ─── */
     #thinking {
       background: var(--near-black);
-      padding: 130px 48px;
+      padding: 100px 48px 130px 48px;
       position: relative;
       overflow: hidden
     }
@@ -2591,7 +2423,9 @@
       align-items: start
     }
 
-    .thinking-left {}
+    .thinking-left {
+      margin-top: 100px;
+    }
 
     .thinking-label {
       font-family: var(--ui);
@@ -2756,7 +2590,7 @@
       margin: -7px;
       border-radius: 50%;
       background: #fff;
-      animation: orbitMarker 30s linear infinite;
+      animation: orbitMarker 25s linear infinite;
       transform-origin: 0 0;
     }
 
@@ -2775,11 +2609,11 @@
 
     /* Stagger the markers so they’re 120° apart */
     .marker:nth-child(2) {
-      animation-delay: -10s;
+      animation-delay: -8.3s;
     }
 
     .marker:nth-child(3) {
-      animation-delay: -20s;
+      animation-delay: -16.6s;
     }
 
     /* Keyframe: rotate → translate → counter‑rotate */
@@ -2880,18 +2714,39 @@
       <p class="logos-lbl reveal">Trusted by leading organisations</p>
       <div class="logos-wrap reveal">
         <div class="logos-track">
-          <span class="client-lg">Tata Group</span><span class="client-lg">Godrej</span><span
-            class="client-lg">Mahindra</span><span class="client-lg">Prestige</span><span
-            class="client-lg">Lodha</span><span class="client-lg">Reliance</span><span
-            class="client-lg">Raymond</span><span class="client-lg">Adani</span><span
-            class="client-lg">Nykaa</span><span class="client-lg">Emaar</span><span class="client-lg">Marico</span><span
-            class="client-lg">Wockhardt</span>
-          <span class="client-lg">Tata Group</span><span class="client-lg">Godrej</span><span
-            class="client-lg">Mahindra</span><span class="client-lg">Prestige</span><span
-            class="client-lg">Lodha</span><span class="client-lg">Reliance</span><span
-            class="client-lg">Raymond</span><span class="client-lg">Adani</span><span
-            class="client-lg">Nykaa</span><span class="client-lg">Emaar</span><span class="client-lg">Marico</span><span
-            class="client-lg">Wockhardt</span>
+          <div class="client-lg"><img src="./assets/client-logos/desi.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/dsm.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/g20.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/garuda.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/govt.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/jsl.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/master.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/phillip.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/prime.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/pwc.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/rsb.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/tata.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/tps.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/trendmicro.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/uttarakhand.png" /></div>
+
+          <!-- Repeat -->
+
+          <div class="client-lg"><img src="./assets/client-logos/desi.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/dsm.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/g20.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/garuda.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/govt.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/jsl.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/master.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/phillip.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/prime.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/pwc.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/rsb.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/tata.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/tps.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/trendmicro.png" /></div>
+          <div class="client-lg"><img src="./assets/client-logos/uttarakhand.png" /></div>
         </div>
       </div>
     </div>
@@ -3362,16 +3217,27 @@
   </section>
 
   <section id="thinking">
-    <div id="orbit-container">
-      <div class="sun">
-        <span>Clarity<br />Creates<br />Momentum</span>
+    <div class="thinking-inner">
+      <div class="thinking-layout">
+        <div class="thinking-left rv">
+          <h2 class="thinking-headline">Clarity<br />Creates<br><em>Momentum</em></h2>
+        </div>
+        <div class="thinking-right rv" style="transition-delay:.12s">
+          <div id="orbit-container">
+            <div class="sun">
+              <span>Clarity<br />Creates<br />Momentum</span>
+            </div>
+            <!-- Single rotating orbit with three markers -->
+            <div class="orbit">
+              <div class="marker" data-label="Vision"></div>
+              <div class="marker" data-label="Voice"></div>
+              <div class="marker" data-label="Value"></div>
+            </div>
+          </div>
+          <p class="thinking-close">When these align, brands move forward with <span>confidence.</span></p>
+        </div>
       </div>
-      <!-- Single rotating orbit with three markers -->
-      <div class="orbit">
-        <div class="marker" data-label="Vision"></div>
-        <div class="marker" data-label="Voice"></div>
-        <div class="marker" data-label="Value"></div>
-      </div>
+
   </section>
 
   <section id="brandzup">
