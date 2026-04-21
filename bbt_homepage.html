@@ -23,42 +23,42 @@
 
     @font-face {
       font-family: 'Neue Haas Grotesk';
-      src: url('./fonts/NeueHaasGrotDisp-15XXThin-Trial.woff') format('woff2');
+      src: url('./fonts/NeueHaasGrotDisp-15XXThin-Trial.woff') format('woff');
       font-weight: 150;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Neue Haas Grotesk';
-      src: url('./fonts/NeueHaasGrotDisp-25XThin-Trial.woff') format('woff2');
+      src: url('./fonts/NeueHaasGrotDisp-25XThin-Trial.woff') format('woff');
       font-weight: 200;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Neue Haas Grotesk';
-      src: url('./fonts/NeueHaasGrotDisp-35Thin-Trial.woff') format('woff2');
+      src: url('./fonts/NeueHaasGrotDisp-35Thin-Trial.woff') format('woff');
       font-weight: 300;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Neue Haas Grotesk';
-      src: url('./fonts/NeueHaasGrotesk-Regular.woff2') format('woff2');
+      src: url('./fonts/NeueHaasGrotText-55Roman-Trial.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Neue Haas Grotesk';
-      src: url('./fonts/NeueHaasGrotesk-Medium.woff2') format('woff2');
+      src: url('./fonts/NeueHaasGrotText-65Medium-Trial.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Neue Haas Grotesk';
-      src: url('./fonts/NeueHaasGrotesk-Bold.woff2') format('woff2');
+      src: url('./fonts/NeueHaasGrotText-75Bold-Trial.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
     }
@@ -67,6 +67,7 @@
       --blue: #0e08ff;
       --blue-dim: rgba(14, 8, 255, 0.15);
       --blue-glow: rgba(14, 8, 255, 0.4);
+      --error: #d92e2e;
       --off-white: #f5f5f0;
       --cream: #f0efe8;
       --near-black: #080808;
@@ -81,15 +82,28 @@
     }
 
     html {
-      scroll-behavior: smooth
+      scroll-behavior: smooth;
+      overflow-x: clip;
+      max-width: 100%;
     }
 
     body {
       background: var(--off-white);
       color: var(--near-black);
       font-family: var(--font-sans);
-      overflow-x: hidden;
+      overflow-x: clip;
+      max-width: 100%;
+      position: relative;
       cursor: none
+    }
+
+    /* Fallback for older browsers that don't support overflow-x: clip */
+    @supports not (overflow-x: clip) {
+
+      html,
+      body {
+        overflow-x: hidden;
+      }
     }
 
     em {
@@ -861,8 +875,16 @@
       display: flex;
       align-items: center;
       animation: lscroll 28s linear infinite;
+      /* Start paused: the marquee uses translateX(-50%) of its own width,
+         so it must not animate until all logo images have loaded and the
+         track's final width is stable. JS adds .logos-ready once ready. */
+      animation-play-state: paused;
       width: max-content;
       will-change: transform;
+    }
+
+    .logos-track.logos-ready {
+      animation-play-state: running;
     }
 
     .logos-set {
@@ -872,7 +894,7 @@
       padding-right: 64px
     }
 
-    .logos-track:hover {
+    .logos-track.logos-ready:hover {
       animation-play-state: paused
     }
 
@@ -888,17 +910,20 @@
 
     .client-lg {
       height: 35px;
-      width: auto;
-      overflow: hidden;
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
       color: var(--light-grey);
       white-space: nowrap;
       transition: color 0.3s;
     }
 
     .client-lg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: 35px;
+      width: auto;
+      max-width: none;
+      display: block;
+      object-fit: contain;
     }
 
     /* SERVICES */
@@ -2337,7 +2362,8 @@
 
     .studio-hd {
       margin: 0 auto;
-      margin-bottom: 56px
+      margin-bottom: 56px;
+      padding: 0 48px
     }
 
     .studio-heading {
@@ -3012,10 +3038,6 @@
       .test-grid {
         grid-template-columns: repeat(2, 1fr)
       }
-
-      .studio-hd {
-        padding: 0 48px;
-      }
     }
 
     /* Mobile: smaller orbit, all dots still hug the circle edge */
@@ -3470,6 +3492,50 @@
       letter-spacing: .14ch;
     }
 
+    /* ── Validation error state ─────────────────────── */
+    .cm-error {
+      display: none;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14ch;
+      text-transform: uppercase;
+      color: var(--error);
+      margin-top: 6px;
+      line-height: 1;
+    }
+
+    .cm-field.invalid input,
+    .cm-field.invalid select,
+    .cm-field.invalid textarea {
+      border-color: var(--error);
+      background: #fff;
+    }
+
+    .cm-field.invalid input:focus,
+    .cm-field.invalid select:focus,
+    .cm-field.invalid textarea:focus {
+      border-color: var(--error);
+      background: #fff;
+    }
+
+    .cm-field.invalid .cm-error {
+      display: block;
+      animation: cmErrorIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes cmErrorIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .cm-submit {
       margin-top: 24px;
       width: 100%;
@@ -3554,7 +3620,133 @@
         font-size: 16px
       }
     }
+
+    /* ── SUCCESS TOAST ────────────────────────────────── */
+    #bbt-toast {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 10000;
+      min-width: 320px;
+      max-width: 380px;
+      background: var(--blue);
+      padding: 18px 44px 18px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      letter-spacing: .14ch;
+      box-shadow: 0 24px 60px rgba(14, 8, 255, 0.35);
+      transform: translateY(-140%);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #bbt-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .bbt-toast-icon {
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .bbt-toast-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--blue);
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .bbt-toast-body {
+      flex: 1;
+      min-width: 0;
+      padding-top: 2px;
+    }
+
+    .bbt-toast-title {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .14ch;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 0 4px;
+    }
+
+    .bbt-toast-msg {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: .14ch;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.78);
+      margin: 0;
+    }
+
+    .bbt-toast-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px 6px;
+      transition: color 0.2s;
+    }
+
+    .bbt-toast-close:hover {
+      color: #fff;
+    }
+
+    .bbt-toast-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      transform-origin: left;
+    }
+
+    #bbt-toast.show .bbt-toast-progress {
+      animation: bbtToastProgress 4s linear forwards;
+    }
+
+    @keyframes bbtToastProgress {
+      from {
+        transform: scaleX(1);
+      }
+
+      to {
+        transform: scaleX(0);
+      }
+    }
+
+    /* Mobile — pinned to top, full-width */
+    @media (max-width: 640px) {
+      #bbt-toast {
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        min-width: 0;
+        max-width: none;
+      }
+    }
   </style>
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lc4kR0nAAAAAJ_72YR7TUdCMHurRQ3LU7_M3yDU"></script>
 </head>
 
 <body>
@@ -3564,7 +3756,7 @@
 
   <nav id="main-nav">
     <a href="#" class="nav-logo">
-      <img src="./image 11.png" alt="Logo Image" />
+      <img src="./image-11.png" alt="Logo Image" />
     </a>
 
     <!-- Launching soon -->
@@ -3624,11 +3816,11 @@
       </div>
       <div class="nav-footer-col">
         <h5>Connect</h5>
-        <a onclick="toggleMenu()" href="https://bigbrandtheory.in" target="_blank">Website</a>
-        <a onclick="toggleMenu()" href="#">LinkedIn</a>
-        <a onclick="toggleMenu()" href="#">Instagram</a>
-        <a onclick="toggleMenu()" href="mailto:hello@bigbrandtheory.in">hello@bigbrandtheory.in</a>
-        <a onclick="toggleMenu()" href="tel:+91987654321">+91 987654321</a>
+        <a onclick="toggleMenu()"
+          href="https://www.linkedin.com/company/bigbrandtheoryindia/posts/?feedView=all">LinkedIn</a>
+        <a onclick="toggleMenu()" href="https://www.instagram.com/bigbrandtheoryindia/">Instagram</a>
+        <a onclick="toggleMenu()" href="mailto:info@bigbrandtheory.in">info@bigbrandtheory.in</a>
+        <a onclick="toggleMenu()" href="tel:+912240676969">+91 22 4067 6969</a>
       </div>
     </div>
   </div>
@@ -3726,7 +3918,7 @@
         <div class="svc-card reveal" style="transition-delay:0.05s">
           <div class="svc-inner">
             <div class="svc-animated-video">
-              <video src="./animated-svg-video/Animation%20%233%20(Dark theme).mp4" autoplay muted loop
+              <video src="./animated-svg-video/Animation%20%233%20(Dark theme).webm" autoplay muted loop
                 playsinline></video>
             </div>
             <div class="svc-num">01</div>
@@ -3741,7 +3933,7 @@
         <div class="svc-card reveal" style="transition-delay:0.1s">
           <div class="svc-inner">
             <div class="svc-animated-video">
-              <video src="./animated-svg-video/Animation%20%231%20(Dark%20theme).mp4" autoplay muted loop
+              <video src="./animated-svg-video/Animation%20%231%20(Dark%20theme).webm" autoplay muted loop
                 playsinline></video>
             </div>
             <div class="svc-num">02</div>
@@ -3756,7 +3948,7 @@
         <div class="svc-card reveal" style="transition-delay:0.15s">
           <div class="svc-inner">
             <div class="svc-animated-video">
-              <video src="./animated-svg-video/Animation%20%234%20(Dark%20theme).mp4" autoplay muted loop
+              <video src="./animated-svg-video/Animation%20%234%20(Dark%20theme).webm" autoplay muted loop
                 playsinline></video>
             </div>
             <div class="svc-num">03</div>
@@ -3771,7 +3963,7 @@
         <div class="svc-card reveal" style="transition-delay:0.2s">
           <div class="svc-inner">
             <div class="svc-animated-video">
-              <video src="./animated-svg-video/Animation%20%237%20(Dark%20theme).mp4" autoplay muted loop
+              <video src="./animated-svg-video/Animation%20%237%20(Dark%20theme).webm" autoplay muted loop
                 playsinline></video>
             </div>
             <div class="svc-num">04</div>
@@ -3795,7 +3987,7 @@
         <!-- LEFT: 2-col image tile grid -->
         <div class="clients-tiles" id="clients-tiles">
           <div class="ctile active" data-panel="0">
-            <img class="ctile-img" src="./assets/partner-section/img 1.jpeg" alt="Founder-led companies">
+            <img class="ctile-img" src="./assets/partner-section/img 3.jpg" alt="Founder-led companies">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Founder-led companies entering their next phase</span>
@@ -3806,7 +3998,7 @@
           </div>
 
           <div class="ctile" data-panel="1">
-            <img class="ctile-img" src="./assets/partner-section/img 2.jpeg" alt="Enterprises">
+            <img class="ctile-img" src="./assets/partner-section/img 2.jpg" alt="Enterprises">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Enterprises undergoing brand transformation</span>
@@ -3817,7 +4009,7 @@
           </div>
 
           <div class="ctile" data-panel="2">
-            <img class="ctile-img" src="./assets/partner-section/img 3.jpeg" alt="Real Estate">
+            <img class="ctile-img" src="./assets/partner-section/img 4.webp" alt="Real Estate">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Real estate developers launching landmark projects</span>
@@ -3828,7 +4020,7 @@
           </div>
 
           <div class="ctile" data-panel="3">
-            <img class="ctile-img" src="./assets/partner-section/img 4.jpeg" alt="Consumer & D2C">
+            <img class="ctile-img" src="./assets/partner-section/img 1.webp" alt="Consumer & D2C">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Consumer and D2C brands building differentiation</span>
@@ -3839,7 +4031,7 @@
           </div>
 
           <div class="ctile" data-panel="4">
-            <img class="ctile-img" src="./assets/partner-section/img 5.jpeg" alt="Purpose-led">
+            <img class="ctile-img" src="./assets/partner-section/img 5.webp" alt="Purpose-led">
             <div class="ctile-overlay"></div>
             <div class="ctile-label">
               <span>Purpose-led and social impact organisations</span>
@@ -3868,7 +4060,7 @@
         <div class="clients-panel-wrap">
           <div class="cpanel active" data-panel="0">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img" src="./assets/partner-section/img 1.jpeg" alt="Founder-led companies">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 3.jpg" alt="Founder-led companies">
               <div class="cpanel-bottom">
                 <p class="cpanel-desc">When founders reach an inflection point, brand clarity is what creates the next
                   leap. We work at the leadership level to unlock the next chapter of growth.</p>
@@ -3879,7 +4071,7 @@
 
           <div class="cpanel" data-panel="1">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img" src="./assets/partner-section/img 2.jpeg" alt="Enterprises">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 2.jpg" alt="Enterprises">
               <div class="cpanel-bottom">
                 <p class="cpanel-desc">Large organisations often outgrow their brand. We help enterprises reshape
                   perception, realign internally, and emerge with a brand that matches their ambition.</p>
@@ -3890,7 +4082,7 @@
 
           <div class="cpanel" data-panel="2">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img" src="./assets/partner-section/img 3.jpeg" alt="Real Estate">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 4.webp" alt="Real Estate">
               <div class="cpanel-bottom">
                 <p class="cpanel-desc">In real estate, brand is the difference between a property and a destination. We
                   craft narratives that make developments iconic before the first brick is laid.</p>
@@ -3901,7 +4093,7 @@
 
           <div class="cpanel" data-panel="3">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img" src="./assets/partner-section/img 4.jpeg" alt="Consumer D2C">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 1.webp" alt="Consumer D2C">
               <div class="cpanel-bottom">
 
                 <p class="cpanel-desc">Consumer markets are crowded. We help D2C brands carve out distinctive
@@ -3913,7 +4105,7 @@
 
           <div class="cpanel" data-panel="4">
             <div class="cpanel-hero">
-              <img class="cpanel-hero-img" src="./assets/partner-section/img 5.jpeg" alt="Purpose-led">
+              <img class="cpanel-hero-img" src="./assets/partner-section/img 5.webp" alt="Purpose-led">
               <div class="cpanel-bottom">
 
                 <p class="cpanel-desc">Purpose without clarity is noise. We help social impact organisations communicate
@@ -3952,38 +4144,38 @@
 
     <div style="overflow:hidden">
       <div class="studio-belt">
-        <div class="studio-img-wrap" style="width:480px;height:320px"><img src="./assets/inside-bbt/img 1.jpg"
+        <div class="studio-img-wrap" style="width:480px;height:320px"><img src="./assets/inside-bbt/img 1.webp"
             alt="Studio" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:320px;height:420px"><img src="./assets/inside-bbt/img 2.png"
+        <div class="studio-img-wrap" style="width:320px;height:420px"><img src="./assets/inside-bbt/img 2.webp"
             alt="Design" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:600px;height:360px"><img src="./assets/inside-bbt/img 3.png"
+        <div class="studio-img-wrap" style="width:600px;height:360px"><img src="./assets/inside-bbt/img 3.webp"
             alt="Strategy" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:340px;height:320px"><img src="./assets/inside-bbt/img 4.png"
+        <div class="studio-img-wrap" style="width:340px;height:320px"><img src="./assets/inside-bbt/img 4.webp"
             alt="Office" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:332px;height:430px"><img src="./assets/inside-bbt/img 5.png"
+        <div class="studio-img-wrap" style="width:332px;height:430px"><img src="./assets/inside-bbt/img 5.webp"
             alt="Collaboration" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:520px;height:380px"><img src="./assets/inside-bbt/img 6.png"
+        <div class="studio-img-wrap" style="width:520px;height:380px"><img src="./assets/inside-bbt/img 6.webp"
             alt="Collaboration" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:320px;height:360px"><img src="./assets/inside-bbt/img 7.png"
+        <div class="studio-img-wrap" style="width:320px;height:360px"><img src="./assets/inside-bbt/img 7.webp"
             alt="Collaboration" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:520px;height:400px"><img src="./assets/inside-bbt/img 8.png"
+        <div class="studio-img-wrap" style="width:520px;height:400px"><img src="./assets/inside-bbt/img 8.webp"
             alt="Collaboration" loading="lazy"></div>
         <!-- duplicate for seamless loop -->
-        <div class="studio-img-wrap" style="width:480px;height:320px"><img src="./assets/inside-bbt/img 1.jpg"
+        <div class="studio-img-wrap" style="width:480px;height:320px"><img src="./assets/inside-bbt/img 1.webp"
             alt="Studio" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:320px;height:420px"><img src="./assets/inside-bbt/img 2.png"
+        <div class="studio-img-wrap" style="width:320px;height:420px"><img src="./assets/inside-bbt/img 2.webp"
             alt="Design" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:600px;height:360px"><img src="./assets/inside-bbt/img 3.png"
+        <div class="studio-img-wrap" style="width:600px;height:360px"><img src="./assets/inside-bbt/img 3.webp"
             alt="Strategy" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:340px;height:320px"><img src="./assets/inside-bbt/img 4.png"
+        <div class="studio-img-wrap" style="width:340px;height:320px"><img src="./assets/inside-bbt/img 4.webp"
             alt="Office" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:332px;height:430px"><img src="./assets/inside-bbt/img 5.png"
+        <div class="studio-img-wrap" style="width:332px;height:430px"><img src="./assets/inside-bbt/img 5.webp"
             alt="Collaboration" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:520px;height:380px"><img src="./assets/inside-bbt/img 6.png"
+        <div class="studio-img-wrap" style="width:520px;height:380px"><img src="./assets/inside-bbt/img 6.webp"
             alt="Collaboration" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:320px;height:360px"><img src="./assets/inside-bbt/img 7.png"
+        <div class="studio-img-wrap" style="width:320px;height:360px"><img src="./assets/inside-bbt/img 7.webp"
             alt="Collaboration" loading="lazy"></div>
-        <div class="studio-img-wrap" style="width:520px;height:400px"><img src="./assets/inside-bbt/img 8.png"
+        <div class="studio-img-wrap" style="width:520px;height:400px"><img src="./assets/inside-bbt/img 8.webp"
             alt="Collaboration" loading="lazy"></div>
       </div>
     </div>
@@ -3999,7 +4191,7 @@
         <a href="https://bigbrandtheory.in/garuda-brand-refresh/" target="_blank" class="wcard-link">
           <div class="wc1">
             <div class="wnum">01</div>
-            <img class="wimg" src="./assets/case-studies/garuda.png" alt="Garuda">
+            <img class="wimg" src="./assets/case-studies/garuda.webp" alt="Garuda">
             <div class="woverlay"></div>
             <div class="winfo">
               <div class="winfo-top">
@@ -4016,7 +4208,7 @@
           <a href="https://bigbrandtheory.in/trend-micro-brand-refresh/" target="_blank" class="wcard-link">
             <div class="wc2">
               <div class="wnum">02</div>
-              <img class="wimg" src="./assets/case-studies/trend-micro.png" alt="Trend">
+              <img class="wimg" src="./assets/case-studies/trend-micro.webp" alt="Trend">
               <div class="woverlay"></div>
               <div class="winfo">
                 <div class="winfo-top">
@@ -4031,7 +4223,7 @@
             target="_blank" class="wcard-link">
             <div class="wc2">
               <div class="wnum">03</div>
-              <img class="wimg" src="./assets/case-studies/prime-max.png" alt="Prime">
+              <img class="wimg" src="./assets/case-studies/prime-max.webp" alt="Prime">
               <div class="woverlay"></div>
               <div class="winfo">
                 <div class="winfo-top">
@@ -4048,7 +4240,7 @@
         <a href="https://bigbrandtheory.in/the-pahadi-story-masala-chai/" target="_blank" class="wcard-link">
           <div class="wc3">
             <div class="wnum">04</div>
-            <img class="wimg" src="./assets/case-studies/pahadi-story.png" alt="Pahadi Story">
+            <img class="wimg" src="./assets/case-studies/pahadi-story.webp" alt="Pahadi Story">
             <div class="woverlay"></div>
             <div class="winfo">
               <div class="winfo-top">
@@ -4062,7 +4254,8 @@
 
       </div>
       <div class="work-all rv">
-        <a href="https://bigbrandtheory.in/all-case-study/" class="btn-p"><span style="z-index: 100;">View All Work</span></a>
+        <a href="https://bigbrandtheory.in/all-case-study/" class="btn-p"><span style="z-index: 100;">View All
+            Work</span></a>
       </div>
     </div>
   </section>
@@ -4115,7 +4308,7 @@
               <line x1="21" y1="3" x2="14" y2="10" />
               <line x1="3" y1="21" x2="10" y2="14" />
             </svg></button>
-          <video class="tvideo-video" src="./assets/testimonials/Rithika Testimonial.mp4"
+          <video class="tvideo-video" src="./assets/testimonials/Rithika Testimonial.webm"
             poster="./assets/testimonials/thumb-1.jpg" playsinline></video>
           <div class="tvideo-info">
             <div class="tcard-avatar">
@@ -4155,7 +4348,7 @@
               <line x1="21" y1="3" x2="14" y2="10" />
               <line x1="3" y1="21" x2="10" y2="14" />
             </svg></button>
-          <video class="tvideo-video" src="./assets/testimonials/Trend review.mp4"
+          <video class="tvideo-video" src="./assets/testimonials/Trend review.webm"
             poster="./assets/testimonials/thumb-2.jpg" playsinline></video>
           <div class="tvideo-info">
             <div class="tcard-avatar">
@@ -4227,11 +4420,11 @@
         <p class="bz-tl">Goodbye brandbook.pdf &nbsp;&#8594;&nbsp; Hello Brandzup</p>
       </div>
       <div class="bz-mockup reveal" style="transition-delay:0.2s">
-        <img src="./assets/PAHADI.png" alt="Brandzup mockup" />
+        <img src="./assets/PAHADI.webp" alt="Brandzup mockup" />
       </div>
     </div>
 
-    <video src="./assets/pink-background.mp4" autoplay muted loop playsinline></video>
+    <video src="./assets/pink-background.webm" autoplay muted loop playsinline></video>
     <div class="brandzup-overlay"></div>
   </section>
 
@@ -4268,9 +4461,11 @@
             href="http://bigbrandtheory.in/spirit-of-the-tribe-branding-case-study">Spirit of the Tribe</a>
         </div>
         <div class="footer-col">
-          <h5>Connect</h5><a href="https://bigbrandtheory.in" target="_blank">Website</a><a href="#">LinkedIn</a><a
-            href="#">Instagram</a><a href="mailto:hello@bigbrandtheory.in">hello@bigbrandtheory.in</a>
-          <a href="tel:+91987654312">+91 98654321</a>
+          <h5>Connect</h5><a
+            href="https://www.linkedin.com/company/bigbrandtheoryindia/posts/?feedView=all">LinkedIn</a><a
+            href="https://www.instagram.com/bigbrandtheoryindia/">Instagram</a><a
+            href="mailto:info@bigbrandtheory.in">info@bigbrandtheory.in</a>
+          <a href="tel:+912240676969">+91 22 4067 6969</a>
         </div>
       </div>
       <div class="footer-btm">
@@ -4480,6 +4675,52 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
     document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function (el) { revObs.observe(el); });
 
+    // CLIENT LOGOS MARQUEE — start only after all logo images have loaded.
+    // The marquee uses translateX(-50%), a percentage of the track's own width.
+    // If the CSS animation runs while images are still loading, the track's width
+    // keeps changing, which causes visible jumps, missing logos and blank states.
+    // So we keep the animation paused and flip it on once images are ready.
+    (function () {
+      var track = document.querySelector('.logos-track');
+      if (!track) return;
+      var imgs = track.querySelectorAll('img');
+      if (!imgs.length) { track.classList.add('logos-ready'); return; }
+
+      var remaining = imgs.length;
+      var started = false;
+
+      function start() {
+        if (started) return;
+        started = true;
+        // Two rAFs to ensure the browser has laid out the now-loaded images
+        // before we hand over to the CSS keyframe animation.
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            track.classList.add('logos-ready');
+          });
+        });
+      }
+
+      function tick() {
+        remaining--;
+        if (remaining <= 0) start();
+      }
+
+      imgs.forEach(function (img) {
+        if (img.complete && img.naturalWidth > 0) {
+          tick();
+        } else {
+          img.addEventListener('load', tick, { once: true });
+          img.addEventListener('error', tick, { once: true });
+        }
+      });
+
+      // Safety net: even if something goes wrong with load events
+      // (slow network, background-tab throttling, etc.), start the
+      // animation after 6s so the bar is never permanently frozen.
+      setTimeout(start, 6000);
+    })();
+
     // COUNTER ANIMATION
     var cntObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -4524,25 +4765,166 @@
     function closeContactModal() {
       document.getElementById('contact-modal').classList.remove('open');
       document.body.style.overflow = '';
+      // Clear any lingering error states
+      document.querySelectorAll('#contact-form .cm-field.invalid').forEach(function (f) {
+        f.classList.remove('invalid');
+      });
     }
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeContactModal();
     });
 
-    document.getElementById('contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = this.querySelector('.cm-submit');
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
-      setTimeout(function () {
-        btn.textContent = 'Sent! We\'ll be in touch.';
-        setTimeout(function () {
-          closeContactModal();
-          btn.textContent = 'Submit';
-          btn.disabled = false;
-        }, 1800);
-      }, 1200);
+    // document.getElementById('contact-form').addEventListener('submit', function (e) {
+    //   e.preventDefault();
+    //   var btn = this.querySelector('.cm-submit');
+    //   btn.textContent = 'Sending…';
+    //   btn.disabled = true;
+    //   setTimeout(function () {
+    //     btn.textContent = 'Sent! We\'ll be in touch.';
+    //     setTimeout(function () {
+    //       closeContactModal();
+    //       btn.textContent = 'Submit';
+    //       btn.disabled = false;
+    //     }, 1800);
+    //   }, 1200);
+    // });
+
+    // Contact form submission by prp
+    document.addEventListener('DOMContentLoaded', function () {
+      var form = document.getElementById('contact-form');
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // Clear error state on input/change for each field
+      form.querySelectorAll('input, select, textarea').forEach(function (el) {
+        var clearError = function () {
+          el.closest('.cm-field').classList.remove('invalid');
+        };
+        el.addEventListener('input', clearError);
+        el.addEventListener('change', clearError);
+      });
+
+      function validateField(el) {
+        var val = (el.value || '').trim();
+        if (!val) return false;
+        if (el.type === 'email' && !emailRegex.test(val)) {
+          // Swap the error message for email-format mismatch
+          el.closest('.cm-field').querySelector('.cm-error').textContent = 'Enter a valid email address';
+          return false;
+        }
+        return true;
+      }
+
+      form.addEventListener('submit', function (e) {
+        // 1. STOPS REDIRECT IMMEDIATELY
+        e.preventDefault();
+        e.stopPropagation();
+
+        //Checking all fields validity
+        var fields = form.querySelectorAll('input, select, textarea');
+        var firstInvalid = null;
+
+        fields.forEach(function (el) {
+          var field = el.closest('.cm-field');
+          if (!validateField(el)) {
+            field.classList.add('invalid');
+            if (!firstInvalid) firstInvalid = el;
+          } else {
+            field.classList.remove('invalid');
+          }
+        });
+
+        if (firstInvalid) {
+          firstInvalid.focus();
+          return;
+        }
+
+
+
+        // const form = this;
+        const btn = form.querySelector('.cm-submit');
+        const originalBtnText = btn.textContent;
+
+        // Visual feedback
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        // Execute reCAPTCHA to get the token
+        const siteKey = '6Lc4kR0nAAAAAJ_72YR7TUdCMHurRQ3LU7_M3yDU';
+
+        grecaptcha.ready(function () {
+          grecaptcha.execute(siteKey, { action: 'submit' }).then(function (token) {
+
+            // 2. Prepare FormData and map your HTML IDs to CF7 Names
+            const formData = new FormData();
+
+            formData.append('_wpcf7_unit_tag', 'wpcf7-f549-p1-o1');
+            formData.append('_wpcf7_container_post', '0');
+
+            // ADD THE RECAPTCHA TOKEN HERE:
+            formData.append('_wpcf7_recaptcha_response', token);
+
+            // Mapping: formData.append('CF7_FIELD_NAME', document.getElementById('YOUR_HTML_ID').value)
+            formData.append('text-711', document.getElementById('cm-name').value);
+            formData.append('text-962', document.getElementById('cm-company').value);
+            formData.append('tel-874', document.getElementById('cm-phone').value);
+            formData.append('email-838', document.getElementById('cm-email').value);
+            formData.append('budget-range', document.getElementById('cm-budget').value);
+            formData.append('services-required', document.getElementById('cm-services').value);
+            formData.append('primary-outcome', document.getElementById('cm-outcome').value);
+            formData.append('textarea-784', document.getElementById('cm-message').value);
+
+            // The CF7 Form ID (from your provided info)
+            formData.append('_wpcf7', '549');
+
+            // 3. API Call to WordPress
+            fetch('https://bigbrandtheory.in/wp-json/contact-form-7/v1/contact-forms/549/feedback', {
+              method: 'POST',
+              body: formData
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.status === 'mail_sent') {
+                  // Success
+                  btn.textContent = 'Sent! We\'ll be in touch.';
+                  form.reset();
+                  setTimeout(() => {
+                    if (typeof closeContactModal === 'function') {
+                      closeContactModal();
+                    }
+                    btn.textContent = originalBtnText;
+                    btn.disabled = false;
+                  }, 2000);
+                } else {
+                  // Validation error or CF7 error
+                  throw new Error(data.message || 'Submission failed');
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                btn.textContent = 'Error. Try again?';
+                btn.disabled = false;
+                alert('There was an issue sending your message. Please try again or email us directly.');
+              });
+
+          }); // end grecaptcha.execute
+        }); // end grecaptcha.ready
+      });
     });
+
+    // ── SUCCESS TOAST ───────────────────────────────────
+    var bbtToastTimer;
+    function showBbtToast() {
+      var toast = document.getElementById('bbt-toast');
+      clearTimeout(bbtToastTimer);
+      toast.classList.remove('show');
+      void toast.offsetWidth;
+      toast.classList.add('show');
+      bbtToastTimer = setTimeout(hideBbtToast, 4000);
+    }
+    function hideBbtToast() {
+      document.getElementById('bbt-toast').classList.remove('show');
+      clearTimeout(bbtToastTimer);
+    }
 
     var studioPos = 0;
     function slideStudio(dir) {
@@ -4569,72 +4951,96 @@
           <div class="cm-field">
             <label for="cm-name">Name</label>
             <input id="cm-name" type="text" placeholder="Your full name" required>
+            <p class="cm-error" data-for="cm-name">Enter your name</p>
           </div>
 
           <div class="cm-field">
             <label for="cm-company">Company</label>
             <input id="cm-company" type="text" placeholder="Company / Brand name" required>
+            <p class="cm-error" data-for="cm-company">Enter your company</p>
           </div>
 
           <div class="cm-field">
             <label for="cm-phone">Phone</label>
-            <input id="cm-phone" type="tel" placeholder="+91 98765 43210">
+            <input id="cm-phone" type="tel" placeholder="+91 98765 43210" required>
+            <p class="cm-error" data-for="cm-phone">Enter your phone number</p>
           </div>
 
           <div class="cm-field">
             <label for="cm-email">Email</label>
             <input id="cm-email" type="email" placeholder="you@company.com" required>
+            <p class="cm-error" data-for="cm-email">Enter a valid email address</p>
           </div>
 
           <div class="cm-field">
             <label for="cm-budget">Budget Range</label>
-            <select id="cm-budget">
+            <select id="cm-budget" required>
               <option value="" disabled selected>Select a range</option>
-              <option>Under ₹5 Lakhs</option>
-              <option>₹5 – 15 Lakhs</option>
-              <option>₹15 – 30 Lakhs</option>
-              <option>₹30 – 50 Lakhs</option>
-              <option>₹50 Lakhs – 1 Cr</option>
-              <option>Above ₹1 Cr</option>
+              <option value="₹50L and above">₹50L and above</option>
+              <option value="₹25L – ₹50L">₹25L – ₹50L</option>
+              <option value="₹15L – ₹25L">₹15L – ₹25L</option>
+              <option value="Below ₹15L (limited scope engagements only)">Below ₹15L (limited scope engagements only)
+              </option>
             </select>
+            <p class="cm-error" data-for="cm-budget">Select a budget range</p>
           </div>
 
           <div class="cm-field">
             <label for="cm-services">Services Required</label>
-            <select id="cm-services">
+            <select id="cm-services" required>
               <option value="" disabled selected>Select a service</option>
-              <option>Brand Strategy</option>
-              <option>Brand Identity & Design</option>
-              <option>Digital Marketing</option>
-              <option>Content & Campaigns</option>
-              <option>Website & Digital Presence</option>
-              <option>Brand Audit</option>
-              <option>Full Brand Build</option>
+              <option value="Brand Transformation System (Rebranding / Refresh)">Brand Transformation System (Rebranding
+                / Refresh)</option>
+              <option value="Brand Creation & Launch (Research to Go-To-Market)">Brand Creation & Launch (Research to
+                Go-To-Market)</option>
+              <option value="Brand Direction & Strategy Sprint">Brand Direction & Strategy Sprint</option>
+              <option value="Growth & Scale Brand Systems">Growth & Scale Brand Systems</option>
+              <option value="Strategic Brand Assets (Website, Decks, Packaging, Communications)">Strategic Brand Assets
+                (Website, Decks, Packaging, Communications)</option>
+              <option value="Ongoing Brand Partnership / Retainer">Ongoing Brand Partnership / Retainer</option>
             </select>
+            <p class="cm-error" data-for="cm-services">Select a service</p>
           </div>
 
           <div class="cm-field full">
             <label for="cm-outcome">Primary Outcome</label>
-            <select id="cm-outcome">
+            <select id="cm-outcome" required>
               <option value="" disabled selected>What do you want to achieve?</option>
-              <option>Launch a new brand</option>
-              <option>Rebrand / Refresh existing brand</option>
-              <option>Grow brand awareness</option>
-              <option>Enter a new market</option>
-              <option>Improve brand consistency</option>
-              <option>Drive leads & conversions</option>
+              <option value="Reposition the brand">Reposition the brand</option>
+              <option value="Prepare for growth / scale">Prepare for growth / scale</option>
+              <option value="Improve perception / credibility">Improve perception / credibility</option>
+              <option value="Launch something new">Launch something new</option>
+              <option value="Not sure yet">Not sure yet</option>
             </select>
+            <p class="cm-error" data-for="cm-outcome">Select an outcome</p>
           </div>
 
           <div class="cm-field full">
             <label for="cm-message">Tell Us About Your Requirement</label>
-            <textarea id="cm-message" placeholder="Share any context — goals, timelines, challenges…"></textarea>
+            <textarea id="cm-message" placeholder="Share any context — goals, timelines, challenges…"
+              required></textarea>
+            <p class="cm-error" data-for="cm-message">Share a brief note</p>
           </div>
 
         </div>
         <button type="submit" class="cm-submit">Submit</button>
       </form>
     </div>
+  </div>
+
+  <!-- Success Toast -->
+  <div id="bbt-toast" role="status" aria-live="polite">
+    <div class="bbt-toast-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="5 12 10 17 19 7" stroke-linecap="square" stroke-linejoin="miter"></polyline>
+      </svg>
+    </div>
+    <div class="bbt-toast-body">
+      <p class="bbt-toast-title">Message sent</p>
+      <p class="bbt-toast-msg">Thanks — we'll get back within 24 hours.</p>
+    </div>
+    <button class="bbt-toast-close" onclick="hideBbtToast()" aria-label="Close">&#x2715;</button>
+    <div class="bbt-toast-progress"></div>
   </div>
 
 </body>
