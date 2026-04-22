@@ -1789,6 +1789,9 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
+    }
+    .tvideo-video.playing {
       object-fit: contain;
     }
 
@@ -3772,8 +3775,7 @@
 
     <div class="nav-cta">
       <a href="https://bigbrandtheory.in/all-case-study/"><span>View Works</span></a>
-      <a href="#" onclick="openContactModal(); return false;"><span style="font-weight: 400;">Start a
-          Conversation</span></a>
+      <a href="#" onclick="openContactModal(); return false;"><span style="font-weight: 400;">Schedule Strategy Call</span></a>
       <div class="hamburger" id="ham" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </div>
@@ -3836,7 +3838,7 @@
         and value so brands move forward with momentum.</p>
       <div class="hero-ctas">
         <a href="#work" class="btn-p"><span>Explore Our Work</span></a>
-        <a href="#" class="btn-s" onclick="openContactModal(); return false;">Start a Conversation</a>
+        <a href="#" class="btn-s" onclick="openContactModal(); return false;">Schedule Strategy Call</a>
       </div>
     </div>
     <div class="hero-scroll">
@@ -4277,7 +4279,7 @@
               <line x1="21" y1="3" x2="14" y2="10" />
               <line x1="3" y1="21" x2="10" y2="14" />
             </svg></button>
-          <video class="tvideo-video" src="https://res.cloudinary.com/dzg1hx9i7/video/upload/v1776775581/Philip_Capital_w1b4ss.mp4" playsinline></video>
+          <video class="tvideo-video" src="https://res.cloudinary.com/dzg1hx9i7/video/upload/v1776775581/Philip_Capital_w1b4ss.mp4" poster="./assets/testimonials/Philip Capital Thumbnail.webp" playsinline></video>
           <div class="tvideo-info">
             <div class="tcard-avatar">
               <!-- <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" /> -->
@@ -4316,7 +4318,7 @@
               <line x1="21" y1="3" x2="14" y2="10" />
               <line x1="3" y1="21" x2="10" y2="14" />
             </svg></button>
-          <video class="tvideo-video" src="https://res.cloudinary.com/dzg1hx9i7/video/upload/v1776775589/Rithika_Testimonial_undiyk.webm" playsinline></video>
+          <video class="tvideo-video" src="https://res.cloudinary.com/dzg1hx9i7/video/upload/v1776775589/Rithika_Testimonial_undiyk.webm" poster="./assets/testimonials/Rithika Thumbnail.webp" playsinline></video>
           <div class="tvideo-info">
             <div class="tcard-avatar">
               <!-- <img src="https://dummyimage.com/100x100/000/fff.jpg" alt="Dummy Image" /> -->
@@ -4440,7 +4442,7 @@
       <h2 class="cta-headline reveal">Momentum begins<br>with <em>clarity.</em></h2>
       <p class="cta-body reveal">If you&#39;re building, transforming or launching a brand and want to do it with
         conviction &#8212;</p>
-      <button class="btn-cta reveal" onclick="openContactModal()"><span>Start a Conversation</span></button>
+      <button class="btn-cta reveal" onclick="openContactModal()"><span>Schedule Strategy Call</span></button>
     </div>
   </section>
 
@@ -4511,16 +4513,25 @@
       if (!video) return;
       card.style.cursor = 'pointer';
 
+      function showPlay() {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = '';
+      }
+      function hidePlay() {
+        btn.style.opacity = '0';
+        btn.style.pointerEvents = 'none';
+      }
+
       card.addEventListener('click', function (e) {
         if (fullBtn && fullBtn.contains(e.target)) return;
         if (video.paused) {
-          video.play();
-          btn.style.opacity = '0';
-          btn.style.pointerEvents = 'none';
+          video.play().catch(function () {});
+          video.classList.add('playing');
+          hidePlay();
         } else {
           video.pause();
-          btn.style.opacity = '1';
-          btn.style.pointerEvents = '';
+          // video.classList.remove('playing');
+          showPlay();
         }
       });
 
@@ -4534,8 +4545,8 @@
       }
 
       video.addEventListener('ended', function () {
-        btn.style.opacity = '1';
-        btn.style.pointerEvents = '';
+        video.classList.remove('playing');
+        showPlay();
       });
     });
 
@@ -4949,7 +4960,7 @@
     <div class="cm-backdrop" onclick="closeContactModal()"></div>
     <div class="cm-box">
       <button class="cm-close" onclick="closeContactModal()" aria-label="Close">&#x2715;</button>
-      <p class="cm-title" id="cm-title">Start a Conversation</p>
+      <p class="cm-title" id="cm-title">Schedule Strategy Call</p>
       <p class="cm-subtitle">Tell us about your brand. We'll get back within 24 hours.</p>
 
       <form id="contact-form" novalidate>
